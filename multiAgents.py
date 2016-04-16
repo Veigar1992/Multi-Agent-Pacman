@@ -188,7 +188,7 @@ class MinimaxAgent(MultiAgentSearchAgent):
         self.agentnum=gameState.getNumAgents()
         depth=self.depth
         agentindex=0
-        (res, actionutility)=self.minimaxvalue(gameState,depth,agentindex)
+        res, actionutility=self.minimaxvalue(gameState,depth,agentindex)
         return res
 
     def minimaxvalue(self,gameState,depth,agentindex):
@@ -196,7 +196,7 @@ class MinimaxAgent(MultiAgentSearchAgent):
         # end condition
         if depth==0 or len(actions)==0:
             utility=self.evaluationFunction(gameState)
-            return ('',utility)
+            return '',utility
         # next agent index
         newagentindex = (agentindex + 1)%self.agentnum
         # next layer
@@ -209,8 +209,8 @@ class MinimaxAgent(MultiAgentSearchAgent):
                 state=gameState.generateSuccessor(agentindex,action)
                 stateutility=self.minimaxvalue(state,depth,newagentindex)
                 if stateutility[1]>utility:
-                    (resaction, utility)=(action, stateutility[1])
-            return (resaction, utility)
+                    resaction, utility=action, stateutility[1]
+            return resaction, utility
         #ghost
         else:
             utility=float("inf")
@@ -219,8 +219,8 @@ class MinimaxAgent(MultiAgentSearchAgent):
                 state=gameState.generateSuccessor(agentindex,action)
                 stateutility=self.minimaxvalue(state,depth,newagentindex)
                 if stateutility[1]<utility:
-                    (resaction, utility)=(action, stateutility[1])
-            return (resaction, utility)
+                    resaction, utility=action, stateutility[1]
+            return resaction, utility
 
 class AlphaBetaAgent(MultiAgentSearchAgent):
     """
